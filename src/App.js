@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ToDo from './component/ToDo';
+import ToDoList from './component/ToDoList';
+import Header from './component/Header';
+import useTodoState from './container/useTodoState';
 
 function App() {
+  const { todos, addTodo, deleteTodo } = useTodoState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App">            
+      <Header />
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-6">
+            <ToDo saveTodo={(todoText) => {
+                const trimmedText = todoText.trim();              
+                  trimmedText.length && addTodo(trimmedText);
+                }
+              }
+            />
+            <ToDoList todos={todos} deleteTodo={deleteTodo} />
+          </div>        
+        </div>        
+      </div>        
+    </div>        
   );
 }
 
